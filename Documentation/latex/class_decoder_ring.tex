@@ -1,0 +1,63 @@
+\hypertarget{class_decoder_ring}{}\section{Decoder\+Ring Class Reference}
+\label{class_decoder_ring}\index{Decoder\+Ring@{Decoder\+Ring}}
+
+
+This class generates a decoder ring using two seeds for std\+::default\+\_\+random\+\_\+engine.  
+
+
+
+
+{\ttfamily \#include $<$Decoder\+Ring.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_decoder_ring_a0f19b19bdb9dfb49ba26c746efffe365}{Decoder\+Ring} (unsigned int seed1, unsigned int seed2)
+\item 
+unsigned int \hyperlink{class_decoder_ring_a03baa70a2d9da7c302c0bd0422c0d2fd}{get\+Value} (unsigned int i)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class generates a decoder ring using two seeds for std\+::default\+\_\+random\+\_\+engine. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Decoder\+Ring@{Decoder\+Ring}!Decoder\+Ring@{Decoder\+Ring}}
+\index{Decoder\+Ring@{Decoder\+Ring}!Decoder\+Ring@{Decoder\+Ring}}
+\subsubsection[{\texorpdfstring{Decoder\+Ring(unsigned int seed1, unsigned int seed2)}{DecoderRing(unsigned int seed1, unsigned int seed2)}}]{\setlength{\rightskip}{0pt plus 5cm}Decoder\+Ring\+::\+Decoder\+Ring (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{seed1, }
+\item[{unsigned int}]{seed2}
+\end{DoxyParamCaption}
+)}\hypertarget{class_decoder_ring_a0f19b19bdb9dfb49ba26c746efffe365}{}\label{class_decoder_ring_a0f19b19bdb9dfb49ba26c746efffe365}
+Constructor for generating the decoder ring 
+\begin{DoxyParams}{Parameters}
+{\em seed1} & is the first seed used by the random engine \\
+\hline
+{\em seed2} & is the second seed used by the random engine \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\index{Decoder\+Ring@{Decoder\+Ring}!get\+Value@{get\+Value}}
+\index{get\+Value@{get\+Value}!Decoder\+Ring@{Decoder\+Ring}}
+\subsubsection[{\texorpdfstring{get\+Value(unsigned int i)}{getValue(unsigned int i)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Decoder\+Ring\+::get\+Value (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+)}\hypertarget{class_decoder_ring_a03baa70a2d9da7c302c0bd0422c0d2fd}{}\label{class_decoder_ring_a03baa70a2d9da7c302c0bd0422c0d2fd}
+Return the value of the inner ring corresponding to the outer ring 
+\begin{DoxyParams}{Parameters}
+{\em i} & is the A\+S\+C\+II value of the character in the outer ring to lookup \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The A\+S\+C\+II value of the corresponding character in the inner ring 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_decoder_ring_8h}{Decoder\+Ring.\+h}\item 
+\hyperlink{_decoder_ring_8cpp}{Decoder\+Ring.\+cpp}\end{DoxyCompactItemize}

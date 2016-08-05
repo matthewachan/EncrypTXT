@@ -1,0 +1,128 @@
+\hypertarget{encrypt_8cpp}{}\section{encrypt.\+cpp File Reference}
+\label{encrypt_8cpp}\index{encrypt.\+cpp@{encrypt.\+cpp}}
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$windows.\+h$>$}\\*
+{\ttfamily \#include $<$iomanip$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include \char`\"{}Decoder\+Ring.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{encrypt_8cpp_a410b1573138c7d98a34f7db734490fac}{read\+Seeds} (unsigned int \&seed1, unsigned int \&seed2)
+\item 
+bool \hyperlink{encrypt_8cpp_ac9565b86e3f9211b91cbb9e30e471cc6}{open\+File} (std\+::ifstream \&file, std\+::string filepath)
+\item 
+std\+::ostringstream \hyperlink{encrypt_8cpp_a9894ee13e5156fa8108654ea825ed624}{encrypt\+File} (std\+::ifstream \&file, \hyperlink{class_decoder_ring}{Decoder\+Ring} decoder\+\_\+ring)
+\item 
+void \hyperlink{encrypt_8cpp_acf90c10efdc72abff596f1dbd2894fc5}{hide\+Console\+Input} (H\+A\+N\+D\+LE \&h\+Stdin, D\+W\+O\+RD \&mode)
+\item 
+void \hyperlink{encrypt_8cpp_a0a4323114587909e8d53cb2f5a649723}{show\+Console\+Input} (H\+A\+N\+D\+LE \&h\+Stdin, D\+W\+O\+RD \&mode)
+\item 
+void \hyperlink{encrypt_8cpp_a750b2d951f507efd8703a81177e22ea2}{print\+Header} (std\+::string header, unsigned int width, char fill\+Char)
+\item 
+int {\bfseries main} ()\hypertarget{encrypt_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{}\label{encrypt_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File\+Encrypter \begin{DoxyAuthor}{Author}
+Matthew Chan 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+7/19/2016 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+0.\+1
+\end{DoxyVersion}
+Encrypt your text files by choosing two numbers to seed a random number generator. Each character in your text file will be encrypted using those seeds you pick, meaning that your file can only be decrypted using the same seeds. In a sense, those two seeds are two numerical passwords which are used to access your files. My use case for this program is for encrypting a text file containing all of my passwords and sensitive data -- this way I can keep my passwords file in plain view without having to worry about others stealing my passwords 
+
+\subsection{Function Documentation}
+\index{encrypt.\+cpp@{encrypt.\+cpp}!encrypt\+File@{encrypt\+File}}
+\index{encrypt\+File@{encrypt\+File}!encrypt.\+cpp@{encrypt.\+cpp}}
+\subsubsection[{\texorpdfstring{encrypt\+File(std\+::ifstream \&file, Decoder\+Ring decoder\+\_\+ring)}{encryptFile(std::ifstream &file, DecoderRing decoder_ring)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostringstream encrypt\+File (
+\begin{DoxyParamCaption}
+\item[{std\+::ifstream \&}]{file, }
+\item[{{\bf Decoder\+Ring}}]{decoder\+\_\+ring}
+\end{DoxyParamCaption}
+)}\hypertarget{encrypt_8cpp_a9894ee13e5156fa8108654ea825ed624}{}\label{encrypt_8cpp_a9894ee13e5156fa8108654ea825ed624}
+Encrypt each character in the file and write the contents to an output string stream 
+\begin{DoxyParams}{Parameters}
+{\em file} & is the text file \\
+\hline
+{\em decoder\+\_\+ring} & is the decoder ring \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The encrypted/decrypted version of the file as a stringstream 
+\end{DoxyReturn}
+\index{encrypt.\+cpp@{encrypt.\+cpp}!hide\+Console\+Input@{hide\+Console\+Input}}
+\index{hide\+Console\+Input@{hide\+Console\+Input}!encrypt.\+cpp@{encrypt.\+cpp}}
+\subsubsection[{\texorpdfstring{hide\+Console\+Input(\+H\+A\+N\+D\+L\+E \&h\+Stdin, D\+W\+O\+R\+D \&mode)}{hideConsoleInput(HANDLE &hStdin, DWORD &mode)}}]{\setlength{\rightskip}{0pt plus 5cm}void hide\+Console\+Input (
+\begin{DoxyParamCaption}
+\item[{H\+A\+N\+D\+LE \&}]{h\+Stdin, }
+\item[{D\+W\+O\+RD \&}]{mode}
+\end{DoxyParamCaption}
+)}\hypertarget{encrypt_8cpp_acf90c10efdc72abff596f1dbd2894fc5}{}\label{encrypt_8cpp_acf90c10efdc72abff596f1dbd2894fc5}
+Function that hides user typing in console \index{encrypt.\+cpp@{encrypt.\+cpp}!open\+File@{open\+File}}
+\index{open\+File@{open\+File}!encrypt.\+cpp@{encrypt.\+cpp}}
+\subsubsection[{\texorpdfstring{open\+File(std\+::ifstream \&file, std\+::string filepath)}{openFile(std::ifstream &file, std::string filepath)}}]{\setlength{\rightskip}{0pt plus 5cm}bool open\+File (
+\begin{DoxyParamCaption}
+\item[{std\+::ifstream \&}]{file, }
+\item[{std\+::string}]{filepath}
+\end{DoxyParamCaption}
+)}\hypertarget{encrypt_8cpp_ac9565b86e3f9211b91cbb9e30e471cc6}{}\label{encrypt_8cpp_ac9565b86e3f9211b91cbb9e30e471cc6}
+Open an input file stream to a file and check if the file was successfully opened 
+\begin{DoxyParams}{Parameters}
+{\em file} & is the input file stream used to open the text file \\
+\hline
+{\em filepath} & is the absolute path to the text file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether the file was successfully opened or not 
+\end{DoxyReturn}
+\index{encrypt.\+cpp@{encrypt.\+cpp}!print\+Header@{print\+Header}}
+\index{print\+Header@{print\+Header}!encrypt.\+cpp@{encrypt.\+cpp}}
+\subsubsection[{\texorpdfstring{print\+Header(std\+::string header, unsigned int width, char fill\+Char)}{printHeader(std::string header, unsigned int width, char fillChar)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Header (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{header, }
+\item[{unsigned int}]{width, }
+\item[{char}]{fill\+Char}
+\end{DoxyParamCaption}
+)}\hypertarget{encrypt_8cpp_a750b2d951f507efd8703a81177e22ea2}{}\label{encrypt_8cpp_a750b2d951f507efd8703a81177e22ea2}
+Print out an A\+S\+C\+II header 
+\begin{DoxyParams}{Parameters}
+{\em header} & is the message to display in the terminal \\
+\hline
+{\em width} & is the row width to print out \\
+\hline
+{\em is} & the character used to surround the header \\
+\hline
+\end{DoxyParams}
+\index{encrypt.\+cpp@{encrypt.\+cpp}!read\+Seeds@{read\+Seeds}}
+\index{read\+Seeds@{read\+Seeds}!encrypt.\+cpp@{encrypt.\+cpp}}
+\subsubsection[{\texorpdfstring{read\+Seeds(unsigned int \&seed1, unsigned int \&seed2)}{readSeeds(unsigned int &seed1, unsigned int &seed2)}}]{\setlength{\rightskip}{0pt plus 5cm}void read\+Seeds (
+\begin{DoxyParamCaption}
+\item[{unsigned int \&}]{seed1, }
+\item[{unsigned int \&}]{seed2}
+\end{DoxyParamCaption}
+)}\hypertarget{encrypt_8cpp_a410b1573138c7d98a34f7db734490fac}{}\label{encrypt_8cpp_a410b1573138c7d98a34f7db734490fac}
+Read seeds for the default\+\_\+random\+\_\+generator from the user 
+\begin{DoxyParams}{Parameters}
+{\em seed1} & is the first seed inputted by the user \\
+\hline
+{\em seed2} & is the second seed inputted by the user \\
+\hline
+\end{DoxyParams}
+\index{encrypt.\+cpp@{encrypt.\+cpp}!show\+Console\+Input@{show\+Console\+Input}}
+\index{show\+Console\+Input@{show\+Console\+Input}!encrypt.\+cpp@{encrypt.\+cpp}}
+\subsubsection[{\texorpdfstring{show\+Console\+Input(\+H\+A\+N\+D\+L\+E \&h\+Stdin, D\+W\+O\+R\+D \&mode)}{showConsoleInput(HANDLE &hStdin, DWORD &mode)}}]{\setlength{\rightskip}{0pt plus 5cm}void show\+Console\+Input (
+\begin{DoxyParamCaption}
+\item[{H\+A\+N\+D\+LE \&}]{h\+Stdin, }
+\item[{D\+W\+O\+RD \&}]{mode}
+\end{DoxyParamCaption}
+)}\hypertarget{encrypt_8cpp_a0a4323114587909e8d53cb2f5a649723}{}\label{encrypt_8cpp_a0a4323114587909e8d53cb2f5a649723}
+Function to show user typing in console 
