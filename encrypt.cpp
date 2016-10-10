@@ -25,24 +25,23 @@
  * @param seed2 is the second seed inputted by the user
  */
 void readSeeds(unsigned int& seed1, unsigned int& seed2) {
-	std::cout << "EXEC: " << "Enter inner seed: ";
+	std::cout << "\nValue of inner seed: ";
 	try {
 		std::cin >> seed1;
 		std::cout << std::endl;
 	}
 	catch (std::exception& e) {
-		std::cerr << "ERROR: " << "Error reading input: " << e.what() << std::endl;
+		std::cerr << "ERROR: " << "Error reading input - " << e.what() << std::endl;
 	}
-	std::cout << "EXEC: " << "Enter outer seed: ";
+	std::cout << "Value of outer seed: ";
 	try {
 		std::cin >> seed2;
 		std::cout << std::endl;
 	}
 	catch (std::exception& e) {
-		std::cerr << "ERROR: " << "Error reading input: " << e.what() << std::endl;
+		std::cerr << "ERROR: " << "Error reading input - " << e.what() << std::endl;
 	}
 }
-
 
 /**
  * Open an input file stream to a file and check if the file was successfully opened
@@ -55,14 +54,12 @@ bool openFile(std::ifstream& file, std::string filepath) {
 		file.open(filepath);
 	}
 	catch (std::exception& e) {
-		std::cerr << "ERROR: " << "Invalid console input: " << e.what() << std::endl;
-	}
-	if (!file.fail()) {
-		std::cout << "INFO : " << "File opened successfully." << std::endl;
-	}
-	else {
-		std::cerr << "ERROR: " << "File could not be opened." << std::endl;
+		std::cerr << "ERROR: " << e.what() << std::endl;
 		return false;
+	}
+	// Logging
+	if (!file.fail()) {
+		std::cout << "INFO : " << "File opened." << std::endl;
 	}
 	return true;
 }
@@ -114,6 +111,7 @@ int main()
 	return 0;
 }
 */
+
 /**
  * Function that hides user typing in console
  */
@@ -139,88 +137,65 @@ void showConsoleInput(HANDLE& hStdin, DWORD& mode) {
 void printHeader(std::string header, unsigned int width, char fillChar) {
 	unsigned int center = width / 2 + header.length() / 2;
 	std::cout << std::setw(width) << std::setfill(fillChar) << "" << std::endl;
-	std::cout << std::setw(center) << header << std::setw(width - center) << "" << std::endl;;
+	std::cout << std::setw(center) << header << std::setw(width - center) << "" << std::endl;
 	std::cout << std::setw(width) << "" << std::endl;
 }
 
 int main() {
-	// Clear the terminal (Windows)
-	std::system("CLS");
-
-	// Create and print ASCII title
-	static std::string title[] = {
-		" /$$$$$$$$          /$$     /$$$$$$$$                                                     /$$",
-		"|__  $$__/         | $$    | $$_____/                                                    | $$",
-		"   | $$ /$$   /$$ /$$$$$$  | $$       /$$$$$$$   /$$$$$$$  /$$$$$$  /$$   /$$  /$$$$$$  /$$$$$$    /$$$$$$   /$$$$$$",
-		"   | $$|  $$ /$$/|_  $$_/  | $$$$$   | $$__  $$ /$$_____/ /$$__  $$| $$  | $$ /$$__  $$|_  $$_/   /$$__  $$ /$$__  $$",
-		"   | $$ \\  $$$$/   | $$    | $$__/   | $$  \\ $$| $$      | $$  \\__/| $$  | $$| $$  \\ $$  | $$    | $$$$$$$$| $$  \\__/",
-		"   | $$  >$$  $$   | $$ /$$| $$      | $$  | $$| $$      | $$      | $$  | $$| $$  | $$  | $$ /$$| $$_____/| $$",
-		"   | $$ /$$/\\  $$  |  $$$$/| $$$$$$$$| $$  | $$|  $$$$$$$| $$      |  $$$$$$$| $$$$$$$/  |  $$$$/|  $$$$$$$| $$",
-		"   |__/|__/  \\__/   \\___/  |________/|__/  |__/ \\_______/|__/       \\____  $$| $$____/    \\___/   \\_______/|__/",
-		"                                                                    /$$  | $$| $$",
-		"     Created by Matthew Chan                                       |  $$$$$$/| $$",
-		"     Copyright 2016                                                 \\______/ |__/"
-	};
-	std::cout << "\n" << std::setw(title[3].length()) << std::setfill('/') << "\n" << std::endl;
-	for (unsigned int i = 0; i < sizeof(title) / sizeof(std::string); ++i) {
-		std::cout << title[i] << std::endl;
-	}
-	std::cout << "\n" << std::setw(title[3].length()) << "" << std::endl << std::endl;
 
 	// Prefixes for logging purposes
 	std::string infoLog = "INFO: ";
 	std::string errorLog = "ERROR: ";
-	std::string execLog = "EXEC: ";
 
 	std::string command;
 
+	// Seeds for RNG
+	unsigned int seed1, seed2;
+
+	// Windows terminal settings
+	HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+	DWORD mode = 0;
+
+	// Clear the terminal (Windows)
+	std::system("CLS");
+
+	// Title screen
+	std::cout << "EncrypTXT // Matthew Chan - 2016" << std::endl;
+	std::cout << "--------------------------------" << std::endl;
+	std::cout << infoLog << "Welcome to EncrypTXT, a command-line tool for text file encryption." << std::endl;
 
 	// Get the relative/absolute path to the text file
-	std::cout << execLog << "Enter a filepath to open: ";
+	std::cout << "\nEnter path to .txt file: ";
 	std::string filepath;
 	std::cin >> filepath;
+
 	// Open an input file stream to the file
 	std::ifstream file;
+	if (openFile(file, filepath)) {
+		while (command != "exit") {
+			std::cout << "\nEnter a command [ encrypt | decrypt | append | exit ]: ";
+			std::cin >> command;
 
-	// Continue running the program until the user quits
-	while (command != "exit") {
-
-		std::cout << infoLog << "Enter a command to execute: ";
-		std::cin >> command;
-
-		// Get the inner and outer seeds from the user
-		unsigned int seed1, seed2;
-
-		HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
-		DWORD mode = 0;
-		
-		if (command == "encrypt") {
-			std::cout << infoLog << "Starting encryption program..." << std::endl;
-
-			// Get filepath of the file to encrypt from the user
-			//std::cout << execLog << "Enter filepath to encrypt: ";
-			//std::string filepath;
-			//std::cin >> filepath;
-
-			// Open an input file stream to the file
-			//std::ifstream file;
-			if (openFile(file, filepath)) {
-
+			if (command == "encrypt") {
+				std::cout << infoLog << "Encrypt selected." << std::endl;
 				hideConsoleInput(hStdin, mode);
 				// Create a encoder ring using two seeds
 				readSeeds(seed1, seed2);
+				std::cout << infoLog << "Seeds inputted." << std::endl;
 				DecoderRing encoder_ring(seed1, seed2);
 				// Encrypt the text contents of the file
 				std::ostringstream encryptedText = encryptFile(file, encoder_ring);
 				showConsoleInput(hStdin, mode);
 
 				// Print out the decrypted version of the text file to the console
-				printHeader("File Contents", 50, '-');
+				std::cout << std::endl;
+				printHeader("Encrypted Contents", 50, '-');
 				std::cout << encryptedText.str() << std::endl;
 				std::cout << std::setw(50) << std::setfill('-') << "" << std::endl;
 
+
 				// Prompt user with an option to overwrite the contents of the file
-				std::cout << execLog << "Overwrite the contents of the encrypted file? (y/n)" << std::endl;
+				std::cout << "Overwrite file with contents? (y/n): ";
 				char answer;
 				std::cin >> answer;
 				if (answer == 'y') {
@@ -228,37 +203,33 @@ int main() {
 					std::ofstream out(filepath);
 					// Overwrite the contents of the file with the decrypted version
 					out << encryptedText.str();
-					std::cout << infoLog << "Successfully overwritten." << std::endl;
+					std::cout << infoLog << "File overwritten." << std::endl;
 					out.close();
 				}
+				else {
+					std::cout << infoLog << "File left alone." << std::endl;
+				}
 			}
-		}
-		else if (command == "decrypt") {
-			std::cout << infoLog << "Decryption program started..." << std::endl;
 
-			// Get filepath of the file to decrypt from the user
-			//std::cout << execLog << "Enter filepath to decrypt: ";
-			//std::string filepath;
-			//std::cin >> filepath;
-			//// Open an input file stream to the file
-			//std::ifstream file;
-			if (openFile(file, filepath)) {
-
+			else if (command == "decrypt") {
+				std::cout << infoLog << "Decrypt selected." << std::endl;
 				hideConsoleInput(hStdin, mode);
 				// Create a decoder ring using two seeds
 				readSeeds(seed1, seed2);
+				std::cout << infoLog << "Seeds inputted." << std::endl;
 				DecoderRing decoder_ring(seed2, seed1);
 				// Decrypt the text contents of the file
 				std::ostringstream decryptedText = encryptFile(file, decoder_ring);
 				showConsoleInput(hStdin, mode);
 
 				// Print out the decrypted version of the text file to the console
-				printHeader("File Contents", 50, '-');
+				std::cout << std::endl;
+				printHeader("Decrypted Contents", 50, '-');
 				std::cout << decryptedText.str() << std::endl;
 				std::cout << std::setw(50) << std::setfill('-') << "" << std::endl;
 
 				// Prompt user with an option to overwrite the contents of the file
-				std::cout << execLog << "Overwrite the contents of the encrypted file? (y/n)" << std::endl;
+				std::cout << "Overwrite file contents? (y/n): ";
 				char answer;
 				std::cin >> answer;
 				if (answer == 'y') {
@@ -266,69 +237,65 @@ int main() {
 					std::ofstream out(filepath);
 					// Overwrite the contents of the file with the decrypted version
 					out << decryptedText.str();
-					std::cout << infoLog << "Successfully overwritten." << std::endl;
+					std::cout << infoLog << "File overwritten." << std::endl;
 					out.close();
 				}
-			}
-		}
-		else if (command == "append") {
-			std::cout << infoLog << "Starting encryption program..." << std::endl;
-
-			// Get the path of the file to write to
-			//std::cout << execLog << "Enter filepath: ";
-			//std::string filepath;
-			//std::cin >> filepath;
-			std::ofstream out;
-			try {
-				// Append to the file
-				out.open(filepath, std::ios_base::app);
-			}
-			catch (std::exception& e) {
-				std::cerr << errorLog << "Invalid filepath." << std::endl;
+				else {
+					std::cout << infoLog << "File left alone." << std::endl;
+				}
 			}
 
-			// Read in text from the user (100 character limit)
-			std::cout << execLog << "Enter text to append: ";
-			std::string rawText;
-			
-			std::getline(std::cin, rawText);
-			std::getline(std::cin, rawText);
 
-			hideConsoleInput(hStdin, mode);
-			// Create a encoder ring using two seeds
-			readSeeds(seed1, seed2);
-			DecoderRing encoder_ring(seed1, seed2);
-			showConsoleInput(hStdin, mode);
+			else if (command == "append") {
+				std::cout << infoLog << "Append selected." << std::endl;
+				std::ofstream out;
+				try {
+					// Append to the file
+					out.open(filepath, std::ios_base::app);
+				}
+				catch (std::exception& e) {
+					std::cerr << errorLog << "Invalid filepath - " << e.what() << std::endl;
+				}
 
-			// Encrypt the string
-			std::string encryptedText;
-			for (int i = 0; i < rawText.length(); ++i) {
-				int ascii = static_cast<int>(rawText[i]);
-				encryptedText += static_cast<char>(encoder_ring.getValue(ascii));
+				// Read in text from the user (100 character limit)
+				std::cout << "\nText to append: ";
+				std::string rawText;
+
+				std::getline(std::cin, rawText);
+				std::getline(std::cin, rawText);
+
+				hideConsoleInput(hStdin, mode);
+				// Create a encoder ring using two seeds
+				readSeeds(seed1, seed2);
+				std::cout << infoLog << "Seeds inputted." << std::endl;
+				DecoderRing encoder_ring(seed1, seed2);
+				showConsoleInput(hStdin, mode);
+
+				// Encrypt the string
+				std::string encryptedText;
+				for (int i = 0; i < rawText.length(); ++i) {
+					int ascii = static_cast<int>(rawText[i]);
+					encryptedText += static_cast<char>(encoder_ring.getValue(ascii));
+				}
+
+				// Append the string to the file
+				out << std::endl << encryptedText;
+				std::cout << infoLog << encryptedText << " was appended to the file" << std::endl;
+				out.close();
 			}
-			
-			// Append the string to the file
-			out << std::endl << encryptedText;
-			std::cout << infoLog << encryptedText << " was appended to the file" << std::endl;
-			out.close();
-		}
-		else if (command == "exit") {
-			std::cout << infoLog << "Closing the program..." << std::endl;
-		}
-		else {
-			std::cerr << errorLog << "Invalid command! Try again." << std::endl;
+			else if (command == "exit") {
+				std::cout << infoLog << "Exiting..." << std::endl;
+			}
+			else {
+				std::cerr << errorLog << "Invalid command!" << std::endl;
+			}
 		}
 
 		// Cleanup
 		file.close();
+
+		// Clear the screen
+		std::system("CLS");
+		return 0;
 	}
-
-	// Placeholder to prevent console window from closing
-	std::cout << "Press any key to close the program...";
-	std::getchar();
-	std::getchar();
-
-	// Clear the screen
-	std::system("CLS");
-	return 0;
 }
